@@ -14,6 +14,8 @@ import {
 function Card({ id, description, onRemove, onCompleted, onEdit }) {
   const [isChecked, setIsChecked] = useState(false);
 
+  const [updateItem, setUpdateItem] = useState();
+
   const handleOnChange = () => {
     setIsChecked(!isChecked);
   };
@@ -21,7 +23,11 @@ function Card({ id, description, onRemove, onCompleted, onEdit }) {
   return (
     <Container>
       <CardContainer>
-        <Description>
+        <Description
+          contentEditable
+          suppressContentEditableWarning
+          onInput={(event) => setUpdateItem(event.currentTarget.textContent)}
+        >
           {isChecked ? <Checked>{description}</Checked> : description}
         </Description>
 
@@ -42,7 +48,7 @@ function Card({ id, description, onRemove, onCompleted, onEdit }) {
             <FaTrash size={18} color="#0369A1" />
           </Button>
 
-          <Button type="button" onClick={() => onEdit(id)}>
+          <Button type="button" onClick={() => onEdit(id, updateItem)}>
             <FaPencilAlt size={18} color="#087c6b" />
           </Button>
         </FormButtons>

@@ -43,7 +43,16 @@ function List() {
     );
   };
 
-  const handleEditItem = (todoId) => {};
+  const handleEditItem = (todoId, newTodo) => {
+    setList((prevState) =>
+      prevState.map((item) => {
+        if (item.id === todoId) {
+          return { ...item, description: newTodo };
+        }
+        return item;
+      }),
+    );
+  };
 
   const handleDeleteAllItems = (listItems) => {
     setList((prevState) =>

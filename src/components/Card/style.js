@@ -22,6 +22,11 @@ export const Description = styled.p`
   color: var(--color-gray-700);
   display: block;
   max-width: 200px;
+
+  &[contenteditable]:focus {
+    outline: 2px dashed var(--color-sky-700);
+    padding: 0.2rem;
+  }
 `;
 
 export const Checked = styled.s`

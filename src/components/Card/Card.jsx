@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-return */
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { FaPencilAlt, FaTrash } from 'react-icons/fa';
@@ -13,42 +14,74 @@ import {
 
 function Card({ id, description, onRemove, onCompleted, onEdit }) {
   const [isChecked, setIsChecked] = useState(false);
-
+  const [isEdit, setIsEdit] = useState(false);
   const [updateItem, setUpdateItem] = useState();
 
   const handleOnChange = () => {
     setIsChecked(!isChecked);
   };
 
+  const handleOnEdit = () => {
+    setIsEdit(!isEdit);
+  };
+
+  const handleUpdateItem = (event) => {
+    if (event && updateItem.length > 0) {
+      onEdit(id, updateItem);
+      setIsEdit(!isEdit);
+    } else {
+      alert('Não é permitido campo vazio');
+      return;
+    }
+  };
+
   return (
     <Container>
       <CardContainer>
-        <Description
-          contentEditable
-          suppressContentEditableWarning
-          onInput={(event) => setUpdateItem(event.currentTarget.textContent)}
-        >
-          {isChecked ? <Checked>{description}</Checked> : description}
-        </Description>
+        {isEdit ? (
+          <Description
+            contentEditable={isEdit}
+            suppressContentEditableWarning
+            onInput={(event) => setUpdateItem(event.currentTarget.textContent)}
+            onBlur={handleUpdateItem}
+          >
+            {description}
+          </Description>
+        ) : (
+          <Description>
+            {!isChecked ? description : <Checked>{description}</Checked>}
+          </Description>
+        )}
 
         <FormButtons>
-          <Input
-            type="checkbox"
-            name="completed"
-            id="completed"
-            value={isChecked}
-            checked={isChecked}
-            onChange={() => {
-              handleOnChange();
-              onCompleted(id, isChecked);
-            }}
-          />
+          {isEdit ? (
+            <Input
+              type="checkbox"
+              name="completed"
+              id="completed"
+              value={isChecked}
+              checked={isChecked}
+              disabled
+            />
+          ) : (
+            <Input
+              type="checkbox"
+              name="completed"
+              id="completed"
+              value={isChecked}
+              checked={isChecked}
+              onChange={() => {
+                handleOnChange();
+                onCompleted(id, !isChecked);
+              }}
+            />
+          )}
 
           <Button type="button" onClick={() => onRemove(id)}>
             <FaTrash size={18} color="#0369A1" />
           </Button>
 
-          <Button type="button" onClick={() => onEdit(id, updateItem)}>
+          <Button type="button" onClick={handleOnEdit}>
             <FaPencilAlt size={18} color="#087c6b" />
           </Button>
         </FormButtons>

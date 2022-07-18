@@ -38,6 +38,7 @@ function List() {
         if (item.id === todoId) {
           return { ...item, completed: eventChecked };
         }
+
         return item;
       }),
     );
@@ -49,15 +50,14 @@ function List() {
         if (item.id === todoId) {
           return { ...item, description: newTodo };
         }
+
         return item;
       }),
     );
   };
 
-  const handleDeleteAllItems = (listItems) => {
-    setList((prevState) =>
-      prevState.filter((item) => item.length === listItems.length),
-    );
+  const handleDeleteAllItems = () => {
+    setList([]);
   };
 
   return (
@@ -95,7 +95,7 @@ function List() {
           ))}
         </CardContainer>
 
-        <BigButton type="button" onClick={() => handleDeleteAllItems(list)}>
+        <BigButton type="button" onClick={handleDeleteAllItems}>
           Excluir Todos
         </BigButton>
       </Container>

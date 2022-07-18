@@ -23,9 +23,10 @@ export const Description = styled.p`
   display: block;
   max-width: 200px;
 
-  &[contenteditable]:focus {
-    outline: 2px dashed var(--color-sky-700);
+  &[contenteditable] {
+    outline: 2px solid var(--color-sky-700);
     padding: 0.2rem;
+    width: 11rem;
   }
 `;
 
@@ -73,6 +74,15 @@ export const Input = styled.input.attrs({
   &:focus {
     outline: max(2px, 0.15em) solid currentColor;
     outline-offset: max(2px, 0.15em);
+  }
+
+  &:disabled {
+    border-color: var(--color-gray-200);
+    cursor: not-allowed;
+
+    &::before {
+      box-shadow: inset 1em 1em var(--color-gray-300);
+    }
   }
 `;
 

@@ -54,28 +54,18 @@ function Card({ id, description, onRemove, onCompleted, onEdit }) {
         )}
 
         <FormButtons>
-          {isEdit ? (
-            <Input
-              type="checkbox"
-              name="completed"
-              id="completed"
-              value={isChecked}
-              checked={isChecked}
-              disabled
-            />
-          ) : (
-            <Input
-              type="checkbox"
-              name="completed"
-              id="completed"
-              value={isChecked}
-              checked={isChecked}
-              onChange={() => {
-                handleOnChange();
-                onCompleted(id, !isChecked);
-              }}
-            />
-          )}
+          <Input
+            type="checkbox"
+            name="completed"
+            id="completed"
+            value={isChecked}
+            checked={isChecked}
+            disabled={isEdit === true}
+            onChange={() => {
+              handleOnChange();
+              onCompleted(id, !isChecked);
+            }}
+          />
 
           <Button type="button" onClick={() => onRemove(id)}>
             <FaTrash size={18} color="#0369A1" />
